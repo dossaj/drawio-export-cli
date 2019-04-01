@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="https://www.draw.io/mxgraph/css/common.css" charset="UTF-8" type="text/css">
+    <script src="https://www.draw.io/js/app.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        
+        //override the load method to pull directly from drawio
+        mxUtils.load = function(url)
+        {
+            url = "https://www.draw.io/" + url;
+            var req = new mxXmlRequest(url, null, 'GET', false);
+            req.send();
+            
+            return req;
+        };
+
+        function exportSvg(data)
+        {
+            var graph = new Graph(document.getElementById("graph"));
+
+            //load file
+            var doc = mxUtils.parseXml(data.xml);
+            var diagrams = doc
+                .documentElement
+                .getElementsByTagName('diagram');
+				
+            if (diagrams.length)
+            {
+                var output = $("<div></div>");
+                output.attr("id", "output");
+                output.hide();
+                
+                $.each(diagrams, function(index, node) 
+                {
+                    var xml = Graph.decompress(mxUtils.getTextContent(node));
+                    var graphModel = mxUtils.parseXml(xml);
+                    
+                    // Parses XML into graph
+                    var codec = new mxCodec(graphModel);
+                    codec.decode(graphModel.documentElement, graph.getModel());
+
+                    var svgXml = mxUtils.getXml(graph.getSvg(null, 1, 1));
+                    
+                    var dia = $("<div></div>")
+                    dia.attr("id", node.getAttribute("name"));
+                    dia.attr('data', svgXml);
+                    output.append(dia);                    
+                });
+
+                $(document.body).append(output);
+            }
+        }
+    </script>
+</head>
+<body style="margin:0px;">
+    <div id="graph" style="width:100%;height:100%;"></div>
+</body>
+</html>

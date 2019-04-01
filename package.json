@@ -1,0 +1,15 @@
+{
+  "name": "drawio-cli",
+  "version": "0.0.1",
+  "description": "Export command line interface for draw io",
+  "main": "drawio-export-cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jason Dos Santos <jester255@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.19.0",
+    "puppeteer": "^1.14.0"
+  }
+}

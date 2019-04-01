@@ -1,0 +1,6 @@
+# ignore mac files
+**/.DS_Store
+
+#ignore generated directories
+node_modules/
+test/output/
