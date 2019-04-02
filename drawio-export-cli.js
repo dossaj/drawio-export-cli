@@ -53,25 +53,21 @@ program
             });
         
         
-        data.forEach(async item => {
-            var filename = path.parse(output);
-            var exists = await fs.existsSync(filename.dir);
-            if(!exists){
-                await fs.mkdirSync(filename.dir);
-            }
+        var filename = path.parse(output);
+        var exists = await fs.existsSync(filename.dir);
+        if(!exists){
+            await fs.mkdirSync(filename.dir);
+        }
 
+        data.forEach(async item => {
             var out = path.join(filename.dir, filename.name + "." + item.name + filename.ext);
-            await fs.writeFileSync(out, item.data, function(err) {
-                if (err) {
-                    return console.log(err)
-                }
-            });    
+            await fs.writeFileSync(out, item.data);    
         });
         
     } catch (error) {
-        console.log(error)
-        process.exit(1)
+        console.log(error);
+        process.exit(1);
     } finally {
-        await browser.close()
+        await browser.close();
     }
   })();

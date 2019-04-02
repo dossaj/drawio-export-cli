@@ -1,15 +1,27 @@
 {
-  "name": "drawio-cli",
+  "name": "drawio-export-cli",
   "version": "0.0.1",
   "description": "Export command line interface for draw io",
-  "main": "drawio-export-cli.js",
+  "bin": "drawio-export-cli.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node drawio-export-cli.js ./test/architecture.xml ./test/output/architecture.svg"
   },
   "author": "Jason Dos Santos <jester255@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "commander": "^2.19.0",
     "puppeteer": "^1.14.0"
-  }
+  }, 
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dossaj/drawio-export-cli.git"
+  },
+  "keywords": [
+    "drawio",
+    "export"
+  ],
+  "bugs": {
+    "url": "https://github.com/dossaj/drawio-export-cli/issues"
+  },
+  "homepage": "https://github.com/dossaj/drawio-export-cli"
 }
