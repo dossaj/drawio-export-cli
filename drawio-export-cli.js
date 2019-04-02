@@ -61,17 +61,13 @@ program
 
         data.forEach(async item => {
             var out = path.join(filename.dir, filename.name + "." + item.name + filename.ext);
-            await fs.writeFileSync(out, item.data, function(err) {
-                if (err) {
-                    return console.log(err)
-                }
-            });    
+            await fs.writeFileSync(out, item.data);    
         });
         
     } catch (error) {
-        console.log(error)
-        process.exit(1)
+        console.log(error);
+        process.exit(1);
     } finally {
-        await browser.close()
+        await browser.close();
     }
   })();

@@ -4,7 +4,7 @@
   "description": "Export command line interface for draw io",
   "bin": "drawio-export-cli.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node drawio-export-cli.js ./test/architecture.xml ./test/output/architecture.svg"
   },
   "author": "Jason Dos Santos <jester255@gmail.com>",
   "license": "MIT",
