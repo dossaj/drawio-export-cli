@@ -10,28 +10,41 @@ const puppeteer = require('puppeteer');
 
 var input = null;
 var output = null;
+var args = null;
 
 program
   .name('drawio-export-cli')
   .version(require('./package.json').version)
+  .option('-d, --debug', 'Enable debugging dump')
+  .option('-i, --ignore', 'Ignore certificate errors')
   .arguments('<source> <destination>')
-  .action(function (source, destination) {
-    input = source
-    output = destination
+  .action(function (source, destination, opts) {
+    input = source;
+    output = destination;
+    args = opts;
   })
   .parse(process.argv);
 
 (async () => {
-    const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-web-security'], 
-        //devtools: true
-    });
+    var options = {
+        args: ['--no-sandbox', '--disable-web-security'],
+        dumpio: args.debug || false
+    }
+
+    if(args.ignore){
+        console.warn('Ignoring certificate errors');
+        options.args.push('--ignore-certificate-errors');
+    }
+    
+    const browser = await puppeteer.launch(options);
 
     try {
         var file = await fs.readFileSync(input, 'utf-8');
 
         const page = await browser.newPage();
-        await page.goto('file://' + __dirname + '/views/export.html');
+        await page.goto('file://' + __dirname + '/views/export.html', {
+            waitUntil: 'load'
+        });
 
         await page.evaluate(function (xml) {
             return exportSvg({ xml: xml }) 
